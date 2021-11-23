@@ -14,10 +14,19 @@ exports.index = (req, res) => {
   })
 };
 
+// READ: find user by id #
 exports.user_profile = (req, res, next) => {
-  res.send("You made it to the admin route");
-}
+  User.findById(req.params.id)
+  .then((user) => {
+    if (!user) {
+      res.status(404).send({status: 'error'})
+    } else {
+      res.status(200).json(user)
+    }
+  });
+};
 
+// CREATE: register a new user to the DB
 exports.user_create = (req, res, next) => {
   const newUser = new User({username: req.body.username});
   const saltHash = genPassword(req.body.password);
@@ -43,6 +52,25 @@ exports.user_create = (req, res, next) => {
       res.status(501).end()
     }
   })
+};
+
+// UPDATE: add a saved image to user profile
+exports.user_saveImage = (req, res) => {
+  User.findOneAndUpdate(
+    { 
+      _id: req.params.id
+    },{
+      $push: {'savedImages': req.body.image}
+    }, 
+    { 
+      new: true 
+    })
+    .then((user) => {
+      res.status(200).send({
+        status: 'ok',
+        images: user.savedImages
+      })
+    });
 };
 
 exports.user_login = (req, res, next) => {
