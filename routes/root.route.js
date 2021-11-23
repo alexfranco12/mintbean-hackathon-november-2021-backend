@@ -9,7 +9,7 @@ const router = new express.Router()
 router.get("/", (req, res) => {
   res.send({
       status: '200',
-      msg: 'welcome to the root endpoint'
+      msg: 'welcome to the paint database'
     });
 });
 
