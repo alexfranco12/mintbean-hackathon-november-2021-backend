@@ -1,6 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose'),
-  MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/paint";
+  MONGODB_URI = (process.env.NODE_ENV === 'development' 
+    ? process.env.MONGODB_URI : "mongodb://localhost/paint");
 
 /**
  * -------------- DATABASE ----------------
