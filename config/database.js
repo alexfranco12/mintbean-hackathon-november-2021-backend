@@ -1,11 +1,11 @@
 require('dotenv').config();
-const mongoose = require('mongoose'),
-  MONGODB_URI = (process.env.NODE_ENV === 'development' 
-    ? "mongodb://localhost/paint" : process.env.MONGODB_URI );
+const mongoose = require('mongoose')
+const MONGODB_URI = (process.env.NODE_ENV === 'development'
+    ? "mongodb://localhost/paint" : process.env.MONGODB_URI);
 
-/**
+/*
  * -------------- DATABASE ----------------
- */
+*/
 
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
