@@ -1,15 +1,19 @@
-// Require Mongoose:
-const mongoose = require("mongoose"),
+require('dotenv').config();
+const mongoose = require('mongoose'),
   MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/paint";
+
+/**
+ * -------------- DATABASE ----------------
+ */
 
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
 
-const db = mongoose.connection;
+const connection = mongoose.connection;
 
 // Database Error/Disconnection
-db.on('error', err => console.log(err.message + ' is Mongod not running?'));
-db.on('disconnected', () => console.log('mongo disconnected'));
+connection.on('error', err => console.log(err.message + ' is Mongod not running?'));
+connection.on('disconnected', () => console.log('mongo disconnected'));
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
@@ -22,9 +26,9 @@ mongoose.connect(MONGODB_URI, {
 )
 .catch((error) => console.log("Connection failed!", error));
 
-db.once('open', () => {
+connection.once('open', () => {
   console.log('connected to mongoose...');
 });
 
-// Export mongoose so we can use it elsewhere
-module.exports = mongoose;
+// Expose the connection
+module.exports = connection;

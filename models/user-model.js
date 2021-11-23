@@ -1,54 +1,35 @@
-const mongoose = require("../db/connection"),
-  passportLocalMongoose = require('passport-local-mongoose')
+const mongoose = require("mongoose")
+const connection = require("../config/database")
 
+/*
+ * -------------- USER SCHEMA ----------------
+*/
 const UserSchema = new mongoose.Schema({
-  provider: 
-    {
-      type: String, 
-      default: ''
-    },
-  displayName: 
-    {
-      type: String, 
-      default: ''
-    },
-  firstName: 
-    {
-      type: String, 
-      trim:true, 
-      default:''
-    },
-  lastName: 
-    {
-      type: String, 
-      default:''
-    },
   username: 
     {
-      type: String,
+      type: String, 
       lowercase: true, 
+      unique: true, 
       required: [true, "can't be blank"], 
-      match: [/^[a-zA-Z0-9]+$/, 'is invalid'], 
+      match: [/^[A-Za-z0-9\-\_]+$/, 'is invalid'], 
       index: true
     },
-  email:
+  admin: 
     {
-      type: String,
-      lowercase: true, 
-      required: [true, "can't be blank"], 
-      match: [/\S+@\S+\.\S+/, 'is invalid'], 
-      index: true
+      type: Boolean, 
+      default: false
+    },
+  savedImages: 
+    {
+      type: Array(),
+      default: []
     },
   hash: String,
   salt: String,
-  artWorks:
-    {
-      type: Array, 
-      default:undefined
-    },
-})
+}, {
+  timestamps: true
+});
 
-UserSchema.plugin(passportLocalMongoose)
 
-const User = mongoose.model('User', UserSchema)
+const User = connection.model('User', UserSchema);
 module.exports = User;
