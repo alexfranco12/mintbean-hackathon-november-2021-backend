@@ -76,8 +76,12 @@ exports.user_saveImage = (req, res) => {
 exports.user_login = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (info) { console.log(info) }
-    if (err) { res.status(501).end(); }
-    if (!user) { return res.status(404).end(); }
+    if (err) { res.json({ error: err }); }
+    if (!user) { 
+      return res.status(404).send({ 
+        msg: "Incorrect username or password"
+      }).end()
+    }
     req.logIn(user, (err) => {
       if (err) { return console.log(err); }
       return res.json(user);
