@@ -39,7 +39,7 @@ exports.user_create = (req, res, next) => {
     }, 
     async (err, doc) => {
       if (err) throw err;
-      if (doc) res.send("username already exists")
+      if (doc) res.status(400).send("username already exists")
       if (!doc) {
         const saltHash = genPassword(req.body.password);
         const salt = saltHash.salt;
