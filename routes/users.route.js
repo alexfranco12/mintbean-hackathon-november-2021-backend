@@ -11,6 +11,7 @@ const User = require('../models/user-model');
 
 // todo: incorperate middleware to protect routes
 router.get('/', userController.index);
+router.get('/me', isAuth, userController.user_data);
 router.get('/me/:id', userController.user_profile);
 router.get('/logout', userController.logout);
 router.post('/register', userController.user_create);
