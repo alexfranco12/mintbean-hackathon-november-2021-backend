@@ -15,12 +15,15 @@ const MongoStore = require('connect-mongo');
 app.set('port', PORT);
 app.set('env', NODE_ENV);
 
-app.use(cors())
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+)
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
-require('./config/passport');
 
 // SESSION SETUP
 const sessionStore = {
@@ -44,6 +47,7 @@ app.use(session({
 // PASSPORT AUTHENTICATION
 app.use(passport.initialize());
 app.use(passport.session());
+require('./config/passport');
 
 // * custum middleware to check if passport object was created
 // app.use((req, res, next) => {
