@@ -16,7 +16,6 @@ exports.index = (req, res) => {
 
 // READ: find user by id #
 exports.user_profile = (req, res, next) => {
-  
   User.findById(req.params.id)
   .then((user) => {
     if (!user) {
@@ -27,6 +26,7 @@ exports.user_profile = (req, res, next) => {
   });
 };
 
+// READ: get logged in user info
 exports.user_data = (req, res) => {
   res.send(req.user)
 }
@@ -102,7 +102,6 @@ exports.user_login = (req, res, next) => {
 
 // logout user
 exports.logout = (req, res, next) => {
-  console.log("---logout---")
   req.logout();
   req.session.destroy();
 };
