@@ -17,7 +17,7 @@ app.set('env', NODE_ENV);
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://hungry-lalande-f9b7b7.netlify.app/"], 
+    origin: ["http://localhost:3000", "https://hungry-lalande-f9b7b7.netlify.app"], 
     credentials: true,
   })
 )
